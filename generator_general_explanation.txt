@@ -1,0 +1,86 @@
+GENERATOR PURPOSE: to go through large data sets memory-intensive operations
+
+EXAMPLE: Generator ticket machine: 
+ 1. Needs to print one ticket at time as needed
+ 2. Store value of last printed ticket
+ 3. Increase number before printing next
+ 4. Query current time at button press for timestamp
+ 
+GENERATOR CHARACTERISTICS
+ -Maintain state
+ -Use "lazy evaluation": when needed
+  -Doesn't store sequence in memory (list and tuples store all data in memory, iterators store only last state)
+  -Supports method called Next(): which yields next value one at a time: analogous to the press button at a ticket machine
+  -Most lists and tuples have a method called iter() that returns an iterator (for loops and list expressions use iter() behind the scenes) this is memory intensive
+  -For infinite sets of data, "lazy evaluation" is paramount, as storying all the data is impossible
+
+TERMINOLOGY:
+GENERATOR FUNCTION: This is what you actually program. Calling the function is what creates and returns the Generator Object
+GENERATOR OBJECT: Object returned by Generator Function which uses lazy evaluation to yield sequences
+GENERATOR: It refers to Generator Object
+
+A generator object is an iterator (with lazy evaluation) . But no all iterators are generators.
+
+GENERATOR EXPRESSIONS
+-It is more concise
+
+NEXT() METHOD
+-To yield values Generators use next() method
+
+Generator Objects:
+1. Cannot be reused
+2. Calling next() on an exhausted generator raises StopIteration error
+
+Generator Expressions:
+1. Can be passed to a function
+2. Don't need parentheses when passed to a function
+
+Generator Expressions Pipeline
+1. Several generator expressions can be linked together
+2. Items flow one by one through the entire pipeline
+3. Pipeline functionality can be packaged into callable functions: for easy use
+
+Context Managers: a Python object that is able to act as a control structure when used after the "with" statement
+-Control structure
+-Used after "with"
+Three Functions:
+1. Setup: Try
+2. Handoff to caller (Yield control): Yield
+3. Wrap-up: Finally
+
+Ex: 
+With open('filename.txt'):
+  #do something
+  
+- A generator can act as a context manager
+Basic Context Manager Framework:
+#--------------------------
+@contextmanager
+def simple_cm(n):
+  try:
+    #setup code
+    yield
+  finally:
+    #wrap up code
+#--------------------------
+
+COROUTINE OVERVIEW
+-Generators produce values
+-Coroutine consume values
+-Coroutine may or may not return values
+-Corouting are not for iterating over sequences
+
+Design
+1. Repeatedly receives input
+2. Processes input
+3. Stops at yield statement
+
+Function and Coroutine
+-Function is the same each time it is called
+-Coroutine may contain persistent properties that can be changed and altered (based from generators)
+-The most import thing in a coroutine is to mantain and update internal state
+-send() is a method that was added to generators exclusively for coroutine functionalities
+-Yield statement in Coroutines:
+  -Pauses flow
+  -Captures sent values
+  -A coroutine is technically a generator designed with a different purpose in mind
